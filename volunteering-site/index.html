@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shaima Sharaf - Volunteering experience</title>
+
+  <!-- FONTS (loaded from Google Fonts - needs internet).
+       To change a font: see README.md. In short, swap the name in this link
+       AND in the "FONTS" section at the top of style.css. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Jost:wght@300;400;500&family=Amiri:wght@400;700&family=Cairo:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Decorative terrazzo strip, like your resume. Delete this whole block to remove it. -->
+  <div class="terrazzo" aria-hidden="true">
+    <svg viewBox="0 0 100 600" preserveAspectRatio="xMidYMid slice">
+      <path class="b-sand"   d="M10 20 Q40 0 70 25 Q85 55 55 75 Q20 80 8 50 Z" />
+      <path class="b-rust"   d="M45 110 Q80 95 92 125 Q90 160 60 165 Q30 160 38 130 Z" />
+      <path class="b-navy"   d="M5 205 Q30 190 50 205 Q55 235 30 245 Q8 240 5 205 Z" />
+      <path class="b-teal"   d="M55 255 Q90 245 95 275 Q85 300 60 295 Q45 280 55 255 Z" />
+      <path class="b-orange" d="M8 335 Q40 315 55 340 Q50 372 22 375 Q0 365 8 335 Z" />
+      <path class="b-sand"   d="M40 420 Q75 405 90 435 Q85 475 55 480 Q30 470 40 420 Z" />
+      <path class="b-rust"   d="M5 500 Q25 490 40 505 Q38 525 15 528 Z" />
+      <path class="b-orange" d="M50 535 Q85 520 92 550 Q80 580 55 575 Q40 560 50 535 Z" />
+      <ellipse class="b-teal"   cx="20" cy="150" rx="6" ry="9"  transform="rotate(30 20 150)" />
+      <ellipse class="b-sand"   cx="82" cy="215" rx="5" ry="8"  transform="rotate(-20 82 215)" />
+      <ellipse class="b-navy"   cx="75" cy="395" rx="4" ry="7"  transform="rotate(40 75 395)" />
+      <ellipse class="b-orange" cx="25" cy="450" rx="5" ry="6" />
+    </svg>
+  </div>
+
+  <main class="page">
+
+    <!-- TITLE: English on the left, Arabic on the right.
+         Edit the words here. -->
+    <header class="title">
+      <h1 class="en display">Shaima Sharaf</h1>
+      <div class="ar display" lang="ar" dir="rtl">شيماء شرف</div>
+
+      <p class="en sans">Volunteering experience</p>
+      <p class="ar sans" lang="ar" dir="rtl">مسيرة التطوع</p>
+    </header>
+
+    <!-- The timeline is built automatically from experiences.js -->
+    <section class="timeline" id="timeline" aria-label="Volunteering timeline"></section>
+
+  </main>
+
+  <script src="experiences.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

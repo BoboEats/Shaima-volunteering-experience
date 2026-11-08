@@ -1,0 +1,224 @@
+/* ==========================================================================
+   1. COLOURS  -  change these to match your resume. Everything uses them.
+      (Pure white and pure black are intentionally not used.)
+   ========================================================================== */
+:root {
+  --color-bg:       #F4F3F0;   /* page background (soft warm grey)   */
+  --color-ink:      #12293A;   /* main text (deep navy)              */
+  --color-muted:    #355A68;   /* body text / secondary (slate teal) */
+  --color-accent:   #E67A52;   /* glowing circle + highlights (orange) */
+  --color-accent-2: #86351C;   /* big years (rust)                   */
+  --color-sand:     #D9C5AE;   /* soft beige                         */
+  --color-taupe:    #8A7358;   /* warm brown                         */
+  --color-line:     #C9B8A6;   /* the vertical timeline line         */
+
+/* ==========================================================================
+   2. FONTS  -  name of each font. Must also be loaded in index.html (see README).
+   ========================================================================== */
+  --font-display:    "Playfair Display", Georgia, serif;     /* English serif / display */
+  --font-body:       "Jost", "Helvetica Neue", Arial, sans-serif;  /* English sans-serif */
+  --font-ar-display: "Amiri", "Noto Naskh Arabic", serif;    /* Arabic serif / display  */
+  --font-ar-body:    "Cairo", "Tahoma", sans-serif;          /* Arabic sans-serif       */
+
+/* ==========================================================================
+   3. SIZES  -  tweak to taste.
+   ========================================================================== */
+  --title-size:      clamp(2rem, 6.2vw, 4.6rem);   /* English name size            */
+  --subtitle-size:   clamp(1rem, 2.6vw, 1.6rem);   /* English second line size     */
+  --ar-scale-display: 1.28;  /* Arabic line 1 size relative to English (bigger = bigger Arabic) */
+  --ar-scale-body:    1.12;  /* Arabic line 2 size relative to English */
+
+  --year-size:       clamp(4.5rem, 13vw, 10rem);   /* the massive years            */
+  --exp-title-size:  clamp(1.5rem, 3.2vw, 2.3rem); /* experience titles            */
+  --body-size:       clamp(1rem, 1.6vw, 1.15rem);  /* experience descriptions      */
+
+  --dot-size: 24px;          /* timeline circle size */
+  --node-col: 72px;          /* width of the middle column that holds the circle */
+  --sidebar:  clamp(34px, 6vw, 96px);  /* width of the terrazzo strip */
+}
+
+/* ========================= BASE ========================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========================= TERRAZZO STRIP ========================= */
+.terrazzo {
+  position: fixed; inset: 0 auto 0 0;
+  width: var(--sidebar);
+  background: color-mix(in srgb, var(--color-sand) 22%, var(--color-bg));
+  z-index: 0;
+}
+.terrazzo svg { width: 100%; height: 100%; display: block; }
+.b-sand   { fill: var(--color-sand); }
+.b-rust   { fill: var(--color-accent-2); }
+.b-navy   { fill: var(--color-ink); }
+.b-teal   { fill: var(--color-muted); }
+.b-orange { fill: var(--color-accent); }
+
+/* ========================= PAGE ========================= */
+.page {
+  position: relative; z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 5rem) 1.25rem 8rem calc(var(--sidebar) + 1.25rem);
+}
+
+/* ========================= TITLE (EN left / AR right) ========================= */
+.title {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline;
+  margin-bottom: clamp(3rem, 8vw, 6rem);
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--color-line);
+}
+.title > * { margin: 0; }
+
+.title .en { text-align: left; }
+.title .ar { text-align: right; }          /* Arabic sits on the right */
+
+.title .display.en {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--title-size);
+  line-height: 1.1;
+  color: var(--color-ink);
+}
+.title .display.ar {
+  font-family: var(--font-ar-display);
+  font-weight: 700;
+  font-size: calc(var(--title-size) * var(--ar-scale-display));
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+.title .sans.en {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--subtitle-size);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-2);
+  margin-top: 0.4rem;
+}
+.title .sans.ar {
+  font-family: var(--font-ar-body);
+  font-weight: 600;
+  font-size: calc(var(--subtitle-size) * var(--ar-scale-body));
+  line-height: 1.6;
+  color: var(--color-accent-2);
+  letter-spacing: 0;           /* never letter-space Arabic: it breaks the joined letters */
+  margin-top: 0.4rem;
+}
+
+/* ========================= TIMELINE ========================= */
+.timeline { position: relative; }
+
+/* the long vertical line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 3px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, var(--color-line) 6%, var(--color-line) 94%, transparent);
+  border-radius: 2px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr var(--node-col) 1fr;
+  align-items: center;
+  padding: clamp(1.8rem, 5vw, 3.5rem) 0;
+  will-change: opacity, transform;
+}
+/* year on the left, experience on the right */
+.row.year-left  { grid-template-areas: "year node exp"; }
+/* experience on the left, year on the right */
+.row.year-right { grid-template-areas: "exp node year"; }
+
+.year { grid-area: year; }
+.exp  { grid-area: exp; }
+.node { grid-area: node; display: flex; justify-content: center; }
+
+/* text leans toward the middle line on both sides */
+.row.year-left  .year, .row.year-right .exp { text-align: right; }
+.row.year-left  .exp,  .row.year-right .year { text-align: left; }
+
+.year {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--year-size);
+  line-height: 0.95;
+  color: var(--color-accent-2);
+  letter-spacing: -0.02em;
+}
+.row.year-left  .year { padding-right: clamp(0.5rem, 2vw, 1.5rem); }
+.row.year-right .year { padding-left:  clamp(0.5rem, 2vw, 1.5rem); }
+.row.year-left  .exp  { padding-left:  clamp(0.5rem, 2vw, 1.5rem); }
+.row.year-right .exp  { padding-right: clamp(0.5rem, 2vw, 1.5rem); }
+
+.exp h2 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--exp-title-size);
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+.exp p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--body-size);
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+/* ========================= THE CIRCLES ========================= */
+.dot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 4px solid var(--color-taupe);
+  transition: background 0.3s ease, border-color 0.3s ease,
+              box-shadow 0.3s ease, transform 0.3s ease;
+}
+/* the circle closest to your mouse lights up */
+.dot.lit {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: scale(1.45);
+  box-shadow:
+    0 0 0 8px color-mix(in srgb, var(--color-accent) 25%, transparent),
+    0 0 28px 8px color-mix(in srgb, var(--color-accent) 55%, transparent);
+}
+
+/* ========================= SMALL SCREENS (phones) ========================= */
+@media (max-width: 720px) {
+  :root { --node-col: 44px; --dot-size: 20px; }
+  .timeline::before { left: calc(var(--node-col) / 2); }
+  .row, .row.year-left, .row.year-right {
+    grid-template-columns: var(--node-col) 1fr;
+    grid-template-areas: "node year" "node exp";
+    align-items: start;
+    row-gap: 0.4rem;
+  }
+  .node { align-self: start; padding-top: 1.2rem; }
+  .row.year-left .year,  .row.year-left .exp,
+  .row.year-right .year, .row.year-right .exp { text-align: left; padding: 0 0 0 0.75rem; }
+}
+
+/* ========================= REDUCED MOTION ========================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .dot { transition: none; }
+}
